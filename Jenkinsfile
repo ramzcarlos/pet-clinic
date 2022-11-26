@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploy'
-                sh 
+                sh '''
                     for runName in `docker ps | grep "alpine-petclinic" | awk '{print $1}'`
                     do
                         if [ "$runName" != "" ]
@@ -39,7 +39,7 @@ pipeline {
                     done
                     docker build -t alpine-petclinic -f Dockerfile.deploy .
                     docker run --name alpine-petclinic --rm -d -p 9966:8080 alpine-petclinic 
-                
+                '''
             }
         }
     }
